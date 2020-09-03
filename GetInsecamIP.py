@@ -8,7 +8,8 @@ import re
 # File to write to
 filename = "IP.txt"
 # Regex to search for IP
-regex = re.compile(r"(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}):(\d{1,5})")
+# only scrape specific URL's
+regex = re.compile(r"(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}):(\d{1,5})/mjpg/video.mjpg")
 
 # HTTP Error 403: Forbidden without User Agent info. Add fake browser visit data. 
 headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) ' 
@@ -26,7 +27,7 @@ f = open(filename, "a")
 for i in range(1,55):
     # Change URL in " " to anything on www.insecam.org
     #reg_url = f"http://www.insecam.org/en/bytype/Defeway/?page={i}"
-    reg_url = f"http://www.insecam.org/en/bytype/Foscam/?page={i}"
+    reg_url = f"http://insecam.org/en/bycountry/NL/?page={i}"
     # Perform HTML Request
     req = Request(url=reg_url, headers=headers) 
     # Get HTML Source
@@ -39,9 +40,9 @@ for i in range(1,55):
     list = re.findall(regex, html)
     if list: 
         for ip, port in list:
-            print(ip + ":" + port)
-            f.write(ip + ":" + port +"\n")
+            print(ip + ":" + port + "/mjpg/video.mjpg")
+            f.write(ip + ":" + port +"/mjpg/video.mjpg\n")
     else:
-        print("No IP Found on page " + i)
+        print("No IP Found on page " + str(i))
 
 f.close()

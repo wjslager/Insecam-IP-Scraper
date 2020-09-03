@@ -10,3 +10,6 @@ Default URL is Defeway models. Change URL on line 28 to any Insecam page (Model/
 Uses urllib and re (Regex library).
 
 **For educational use only. I take no responsibility for any damages caused by misuse of this software.**
+
+# Changes made after forking
+Edited regex to only store IP's ending with /mjpg/video.mjpg
