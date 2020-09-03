@@ -6,7 +6,7 @@ import urllib.request
 import re
 
 # File to write to
-filename = "IP.txt"
+filename = "new-on-insecam.txt"
 # Regex to search for IP
 # only scrape specific URL's
 regex = re.compile(r"(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}):(\d{1,5})/mjpg/video.mjpg")
@@ -24,10 +24,10 @@ headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) '
 f = open(filename, "a")
 
 # For each page 1 to x-1 
-for i in range(1,55):
+for i in range(1,999):
     # Change URL in " " to anything on www.insecam.org
     #reg_url = f"http://www.insecam.org/en/bytype/Defeway/?page={i}"
-    reg_url = f"http://insecam.org/en/bycountry/NL/?page={i}"
+    reg_url = f"http://insecam.org/en/bynew/?page={i}"
     # Perform HTML Request
     req = Request(url=reg_url, headers=headers) 
     # Get HTML Source
@@ -40,8 +40,8 @@ for i in range(1,55):
     list = re.findall(regex, html)
     if list: 
         for ip, port in list:
-            print(ip + ":" + port + "/mjpg/video.mjpg")
-            f.write(ip + ":" + port +"/mjpg/video.mjpg\n")
+            print("http://" + ip + ":" + port + "/mjpg/video.mjpg")
+            f.write("http://" + ip + ":" + port +"/mjpg/video.mjpg\n")
     else:
         print("No IP Found on page " + str(i))
 
